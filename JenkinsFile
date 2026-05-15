@@ -73,10 +73,14 @@ pipeline {
 
     post {
         always {
-            script {
-                withCredentials([string(credentialsId: 'resend_api_key', variable: 'RESEND_API_KEY')]) {
-                    env.BUILD_STATUS = currentBuild.currentResult
-                    sh "node scripts/send_resend_email.js '${params.RESEND_TO}' 'Pipeline Status: ${env.BUILD_STATUS}' 'El pipeline ha finalizado con estado: ${env.BUILD_STATUS}. Revisa los logs en Jenkins para más detalles.' || true"
+            node('') {
+                script {
+                    docker.image('node:20').inside {
+                        withCredentials([string(credentialsId: 'resend_api_key', variable: 'RESEND_API_KEY')]) {
+                            env.BUILD_STATUS = currentBuild.currentResult
+                            sh "node scripts/send_resend_email.js '${params.RESEND_TO}' 'Pipeline Status: ${env.BUILD_STATUS}' 'El pipeline ha finalizado con estado: ${env.BUILD_STATUS}. Revisa los logs en Jenkins para más detalles.' || true"
+                        }
+                    }
                 }
             }
         }
