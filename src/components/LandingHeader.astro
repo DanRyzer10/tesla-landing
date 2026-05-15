@@ -71,7 +71,6 @@ import Logo from "./Logo.astro"
 <script>
     const $landingHeader = document.querySelector("#landing-header") as HTMLElement
 
-    //intersection observer
     const observerOptions = {
         root:null,
         rootMargin:'0px',
@@ -87,7 +86,6 @@ import Logo from "./Logo.astro"
             }
         })
     },observerOptions);
-
     const $sections = document.querySelectorAll(".landing-section")
     $sections.forEach((section)=>obserber.observe(section))
 </script>
