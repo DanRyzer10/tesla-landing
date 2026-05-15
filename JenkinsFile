@@ -15,7 +15,7 @@ pipeline {
                 checkout([$class: 'GitSCM',
                     branches: [[name: '*/master']],
                     userRemoteConfigs: [[
-                        url: 'git@github.com:DanRyzer10/lambdatest.git',
+                        url: 'git@github.com:DanRyzer10/tesla-landing.git',
                         credentialsId: 'github-ssh-key'
                     ]]
                 ])
